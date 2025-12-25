@@ -1,0 +1,18 @@
+sudo docker exec -it currency_db mongosh currency_db --eval '
+  var data = [];
+  for (var i = 7; i >= 0; i--) {
+    var d = new Date();
+    d.setDate(d.getDate() - i);
+    data.push({
+      timestamp: d,
+      rates: { 
+        USD: +(91 + Math.random() * 2).toFixed(2), 
+        EUR: +(99 + Math.random() * 2).toFixed(2), 
+        CNY: +(12 + Math.random() * 0.5).toFixed(2) 
+      },
+      __v: 0
+    });
+  }
+  db.currencies.insertMany(data);
+  print("База наполнена данными за неделю");
+'
